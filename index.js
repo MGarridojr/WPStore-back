@@ -17,7 +17,6 @@ dotenv.config()
 
 // routes
 app.use(authRouter)
-app.use(productsRoute)
 app.use(paymentRoute)
 
 const port = process.env.PORT
