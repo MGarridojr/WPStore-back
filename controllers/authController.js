@@ -5,6 +5,9 @@ import db from "./../db.js";
 
 export async function signUp(req, res) {
   try {
+    let user = await db.collection("users").findOne({email: req.body.email});
+    if(user) return res.status(422).send("User already exists.");
+
     const SALT = 10;
     const passwordHash = bcrypt.hashSync(req.body.password, SALT);
     
@@ -12,6 +15,13 @@ export async function signUp(req, res) {
       name: req.body.name,
       email: req.body.email,
       password: passwordHash
+    });
+
+    user = await db.collection("users").findOne({email: req.body.email});
+
+    await db.collection("carts").insertOne({
+      userId: user._id,
+      products: []
     });
 
     return res.sendStatus(201); // created
@@ -30,7 +40,7 @@ export async function signIn(req, res) {
 
     if(user && bcrypt.compareSync(req.body.password, user.password)) {
       const token = uuid();
-      await db.collection("sessions").insertOne({token, userId: user._id});
+      await db.collection("sessions").insertOne({token, userId: user._id, lastStatus: Date.now()});
       return res.send({token, name: user.name});
     }
 
