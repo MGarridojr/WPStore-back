@@ -24,3 +24,13 @@ export async function getProducts(req, res){
         res.send(products)
     })
 }
+
+// export async function getProductDetail(req, res){
+//     const {_id} = req.body
+//     db.collection("products").find({_id})
+//     .then(product =>{
+//         res.send(product)
+//     })
+//     .catch( () => 
+//         res.sendStatus(404) )
+// }
