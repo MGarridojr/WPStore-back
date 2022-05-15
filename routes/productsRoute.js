@@ -1,36 +1,14 @@
-import db from "../db.js";
 import { Router } from "express";
+import { validateToken } from "../middlewares/validateAuthMiddleware.js";
+import { addProduct } from "../controllers/productController.js";
+import { getProducts } from "../controllers/productController.js";
 
 const productsRoute = Router();
 
-productsRoute.post("/products", (req, res) =>{
-    db.collection("products").insertOne({
-        name: req.body.name,
-        category: req.body.category,
-        color : req.body.color,
-        price: req.body.price,
-        quantity: req.body.quantity,
-        img: req.body.img,
-        promo: req.body.promo
-    })
-    .then(()=>{
-        res.sendStatus(201)
-    })
-    .catch(()=>{
-        res.sendStatus(500)
-    })
-})
+productsRoute.use(validateToken)
 
-productsRoute.get("/products", (req, res) =>{
-    db.collection("products").find().toArray()
-    .then(products =>{
-        res.send(products)
-    })
-})
+productsRoute.post("/products", addProduct)
 
-
+productsRoute.get("/products", getProducts)
 
 export default productsRoute
-
-
-
