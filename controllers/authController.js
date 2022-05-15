@@ -30,7 +30,6 @@ export async function signUp(req, res) {
     console.log(error);
     return res.sendStatus(500);
   }
-
 }
 
 export async function signIn(req, res) {
