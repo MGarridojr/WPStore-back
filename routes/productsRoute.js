@@ -12,6 +12,6 @@ productsRoute.post("/products", addProduct)
 
 productsRoute.get("/products", getProducts)
 
-// productsRoute.get("/productDetail", getProductDetail)
+productsRoute.get("/products/:_id", getProductDetail)
 
 export default productsRoute

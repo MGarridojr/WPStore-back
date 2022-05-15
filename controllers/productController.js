@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb"
 import db from "../db.js"
 
 export async function addProduct(req, res) {
@@ -25,12 +26,18 @@ export async function getProducts(req, res){
     })
 }
 
-// export async function getProductDetail(req, res){
-//     const {_id} = req.body
-//     db.collection("products").find({_id})
-//     .then(product =>{
-//         res.send(product)
-//     })
-//     .catch( () => 
-//         res.sendStatus(404) )
-// }
+export async function getProductDetail(req, res){
+    const {_id} = req.params
+    console.log('id do item: ', _id)
+    // try {
+    //     const objetoProduto = await db.collection("products").findOne({_id: new ObjectId(_id)})
+    //     console.log(objetoProduto)
+    //     if(!objetoProduto){
+    //         res.status(404).send('not found')
+    //         return
+    //     }
+    //     res.send(objetoProduto)
+    // }catch (err){
+    //     res.status(500).send(err)
+    // }
+}
