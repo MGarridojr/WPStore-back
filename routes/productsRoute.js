@@ -9,9 +9,7 @@ const productsRoute = Router();
 productsRoute.use(validateToken)
 
 productsRoute.post("/products", addProduct)
-
 productsRoute.get("/products", getProducts)
-
 productsRoute.get("/products/:_id", getProductDetail)
 
 export default productsRoute

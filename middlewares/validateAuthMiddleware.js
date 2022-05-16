@@ -2,21 +2,21 @@ import { authSignInSchema, authSignUpSchema } from "../schemas/authSchema.js";
 import db from "./../db.js";
 
 export function validateSignUp(req, res, next) {
-    const {error} = authSignUpSchema.validate(req.body);
-    if(error) {
+    const { error } = authSignUpSchema.validate(req.body);
+    if (error) {
         return res.sendStatus(422); // unprocessable entity
     }
-    
+
     next();
 }
 
 export function validateSignIn(req, res, next) {
-  const {error} = authSignInSchema.validate(req.body);
-  if(error) {
-    return res.sendStatus(422); // unprocessable entity
-  }
+    const { error } = authSignInSchema.validate(req.body);
+    if (error) {
+        return res.sendStatus(422); // unprocessable entity
+    }
 
-  next();
+    next();
 }
 
 export async function validateToken(req, res, next) {
