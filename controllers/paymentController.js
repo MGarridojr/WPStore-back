@@ -3,8 +3,8 @@ import db from "../db.js";
 
 export async function choosePayment(req, res){
 
-    const { credCard, credName, credCode, credValidity, id} = req.body
-    const userId = id
+    const { credCard, credName, credCode, credValidity} = req.body
+    const {userId} = req.headers
     try{     
         const userFound = await db.collection("users").findOne({
             _id: new ObjectId(userId)
