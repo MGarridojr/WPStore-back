@@ -2,31 +2,37 @@ import db from "../db.js";
 
 export async function addToCart(req, res) {
     const { user } = res.locals;
-
+    const {name} = req.body
     try {
-        const cart = await db.collection("carts").findOne({ userId: user._id });
-        const cartProduct = cart.products.find(product => product.name === req.body.name);
-
-        if (cartProduct) {
-            await db.collection("carts").updateOne({
-                userId: user._id, "products.name": cartProduct.name
-            }, { $set: { "products.$.quantity": cartProduct.quantity + 1 } });
-        }
-        else {
-            let product = await db.collection("products").findOne({ name: req.body.name });
-            product.quantity = 1;
-            delete product._id;
-
-            await db.collection("carts").updateOne({
+        const cart = await db.collection("carts").findOne({ userId: user._id });                           
+        if(!cart){
+            console.log('car nao existe')
+            const product = await db.collection('products').findOne({name: name})
+            await db.collection("carts").insertOne({userId: user._id,
+                                                    products: [product]})
+        }else{
+            const cartProduct = cart.products.find(product => product.name === req.body.name);
+    
+            if (cartProduct) {
+                await db.collection("carts").updateOne({
+                    userId: user._id, "products.name": cartProduct.name
+                }, { $set: { "products.$.quantity": cartProduct.quantity + 1 } });
+            }
+            else {
+                let product = await db.collection("products").findOne({ name: req.body.name });
+                product.quantity = 1;
+                delete product._id;
+    
+                await db.collection("carts").updateOne({
+                    userId: user._id
+                }, { $push: { products: product } });
+            }
+    
+            await db.collection("sessions").updateOne({
                 userId: user._id
-            }, { $push: { products: product } });
+            }, { $set: { lastStatus: Date.now() } });
+            res.sendStatus(201);
         }
-
-        await db.collection("sessions").updateOne({
-            userId: user._id
-        }, { $set: { lastStatus: Date.now() } });
-
-        res.sendStatus(201);
     } catch (error) {
         console.log("Error updating cart.", error);
         res.status(500).send("Error updating cart.");
