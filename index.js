@@ -5,6 +5,7 @@ import chalk from 'chalk'
 import authRouter from "./routes/authRoute.js"
 import productsRoute from "./routes/productsRoute.js"
 import paymentRoute from "./routes/paymentRoute.js"
+// import cartRouter from "./routes/cartRoute.js"
 
 
 //express 
@@ -18,6 +19,8 @@ dotenv.config()
 // routes
 app.use(authRouter)
 app.use(paymentRoute)
+app.use(productsRoute)
+// app.use(cartRouter)
 
 const port = process.env.PORT
 app.listen(port, () => {
