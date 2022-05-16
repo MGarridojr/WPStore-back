@@ -18,6 +18,7 @@ export async function signUp(req, res) {
       payment:[{}]
     });
 
+    
     user = await db.collection("users").findOne({email: req.body.email});
 
     await db.collection("carts").insertOne({
