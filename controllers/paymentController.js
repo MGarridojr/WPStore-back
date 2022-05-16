@@ -26,13 +26,12 @@ export async function choosePayment(req, res){
             }
         ) 
         : res.sendStatus(500);
-
+        
         return res.sendStatus(201)
         
     } catch (error) {
         console.log("Error creating new user.");
         console.log(error);
         return res.sendStatus(500);
-
     }
 }
