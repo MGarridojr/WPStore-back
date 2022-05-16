@@ -42,7 +42,7 @@ export async function signIn(req, res) {
     if(user && bcrypt.compareSync(req.body.password, user.password)) {
       const token = uuid();
       await db.collection("sessions").insertOne({token, userId: user._id, lastStatus: Date.now()});
-      return res.send({token, name: user.name, userId: user._id });
+      return res.send({token, name: user.name, userId: user._id});
     }
 
     return res.sendStatus(404); // not found
