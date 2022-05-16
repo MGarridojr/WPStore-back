@@ -2,8 +2,10 @@ import express, {json} from "express"
 import dotenv from 'dotenv'
 import cors from 'cors'
 import chalk from 'chalk'
+
 import authRouter from "./routes/authRoute.js"
 import productsRoute from "./routes/productsRoute.js"
+import cartsRoute from "./routes/cartsRoute.js"
 
 
 //express 
@@ -17,6 +19,7 @@ dotenv.config()
 // routes
 app.use(authRouter)
 app.use(productsRoute)
+app.use(cartsRoute)
 
 const port = process.env.PORT
 app.listen(port, () => {
