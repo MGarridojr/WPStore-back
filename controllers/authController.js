@@ -14,7 +14,8 @@ export async function signUp(req, res) {
     await db.collection("users").insertOne({
       name: req.body.name,
       email: req.body.email,
-      password: passwordHash
+      password: passwordHash,
+      payment:[{}]
     });
 
     user = await db.collection("users").findOne({email: req.body.email});
@@ -30,7 +31,6 @@ export async function signUp(req, res) {
     console.log(error);
     return res.sendStatus(500);
   }
-
 }
 
 export async function signIn(req, res) {
