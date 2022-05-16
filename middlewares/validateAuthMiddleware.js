@@ -4,6 +4,7 @@ import db from "./../db.js";
 export function validateSignUp(req, res, next) {
     const { error } = authSignUpSchema.validate(req.body);
     if (error) {
+        console.log("passou aqui3")
         return res.sendStatus(422); // unprocessable entity
     }
 

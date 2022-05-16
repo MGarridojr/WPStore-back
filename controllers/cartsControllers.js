@@ -73,8 +73,6 @@ export async function removeFromCart(req, res) {
     const { user } = res.locals;
 
     try {
-	console.log("removendo");
-	console.log(req.params.name);
         await db.collection("carts").updateOne({
             userId: user._id
         }, { $pull: { products: { name: req.params.name } } });
